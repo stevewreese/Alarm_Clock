@@ -10,4 +10,14 @@ import UIKit
 
 class Make_Clock : UIView {
     
+    private let clockLabel: UILabel = {
+        let clockLabel = UILabel(frame: .zero)
+        clockLabel.text = "this will be the clock"
+        clockLabel.textColor = UIColor.green
+        return clockLabel
+    }()
+    
+    
+    
+    
 }
