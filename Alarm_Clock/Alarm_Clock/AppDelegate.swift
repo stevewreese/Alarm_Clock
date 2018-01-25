@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootView = Make_Clock()
         rootView.backgroundColor = UIColor.darkGray
         
-        mainWindow.rootViewController?.view = Make_Clock()
+        mainWindow.rootViewController?.view = rootView
         mainWindow.makeKeyAndVisible()
         
         return true
