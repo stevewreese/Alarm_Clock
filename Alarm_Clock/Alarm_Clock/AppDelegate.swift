@@ -18,7 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         mainWindow.rootViewController = UIViewController()
-        mainWindow.rootViewController!.view.backgroundColor = UIColor.green
+        
+        
+        mainWindow.rootViewController?.view = Make_Clock()
         mainWindow.makeKeyAndVisible()
         
         return true

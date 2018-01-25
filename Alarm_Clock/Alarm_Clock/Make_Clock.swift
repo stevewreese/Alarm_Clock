@@ -6,4 +6,8 @@
 //  Copyright © 2018 u0396206. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class Make_Clock : UIView {
+    
+}

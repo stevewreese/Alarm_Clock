@@ -53,10 +53,10 @@
 			isa = PBXGroup;
 			children = (
 				FB247CBC20194C9A0030FEE8 /* AppDelegate.swift */,
+				FB247CCE201953A80030FEE8 /* Make_Clock.swift */,
 				FB247CC320194C9A0030FEE8 /* Assets.xcassets */,
 				FB247CC520194C9A0030FEE8 /* LaunchScreen.storyboard */,
 				FB247CC820194C9A0030FEE8 /* Info.plist */,
-				FB247CCE201953A80030FEE8 /* Make_Clock.swift */,
 			);
 			path = Alarm_Clock;
 			sourceTree = "<group>";
