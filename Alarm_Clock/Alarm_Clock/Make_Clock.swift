@@ -10,6 +10,10 @@ import UIKit
 
 class Make_Clock : UIView {
     
+    var seconds = 60 //This variable will hold a starting value of seconds. It could be any amount above 0.
+    var timer = Timer()
+    var isTimerRunning = false //This will be used to make sure only one timer is created at a time.
+    
     private let clockLabel: UILabel = {
         let clockLabel = UILabel(frame: .zero)
         
@@ -22,6 +26,7 @@ class Make_Clock : UIView {
     override init(frame: CGRect){
         super.init(frame: frame)
         addSubview(clockLabel)
+        runTimer()
     }
     
     var drawingBounds: CGRect {
@@ -52,27 +57,7 @@ class Make_Clock : UIView {
         context.fill(bounds)
         context.setFillColor(UIColor.darkGray.cgColor)
         clockLabel.frame = drawingBounds
-        let date = Date()
-        let calendar = Calendar.current
-        var hour = calendar.component(.hour, from: date)
-        var timeOfDay: String = ""
-        if(hour >= 12)
-        {
-            hour = hour - 12
-            if(hour == 0)
-            {
-                hour = 12
-            }
-            timeOfDay = "PM"
-        }
-        else{
-            timeOfDay = "AM"
-        }
-        let minutes = calendar.component(.minute, from: date)
-    
-        let day = calendar.component(.weekday, from: date)
-        let weekday = getDayofWeek(weekDay: day)
-        clockLabel.text = "\(weekday) -> \(hour):\(minutes) \(timeOfDay)"
+  
         
         
     }
@@ -98,6 +83,40 @@ class Make_Clock : UIView {
             return ""
         }
         
+    }
+    
+    @objc func updateClock() {
+        let date = Date()
+        let calendar = Calendar.current
+        var hour = calendar.component(.hour, from: date)
+        var timeOfDay: String = ""
+        if(hour >= 12)
+        {
+            hour = hour - 12
+            if(hour == 0)
+            {
+                hour = 12
+            }
+            timeOfDay = "PM"
+        }
+        else{
+            timeOfDay = "AM"
+        }
+        var minutes = calendar.component(.minute, from: date)
+        var seconds = calendar.component(.second, from: date)
+        var addZero: String = ""
+        if(minutes < 10)
+        {
+            addZero = "0"
+        }
+        
+        let day = calendar.component(.weekday, from: date)
+        let weekday = getDayofWeek(weekDay: day)
+        clockLabel.text = "\(weekday) -> \(hour):\(addZero)\(minutes):\(seconds)\(timeOfDay)"
+    }
+    
+    func runTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(Make_Clock.updateClock)), userInfo: nil, repeats: true)
     }
 
     
