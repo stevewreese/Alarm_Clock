@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9ACED1CA201E76BA00EB260E /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACED1C9201E76BA00EB260E /* CoreText.framework */; };
 		FB247CBD20194C9A0030FEE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB247CBC20194C9A0030FEE8 /* AppDelegate.swift */; };
 		FB247CC420194C9A0030FEE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB247CC320194C9A0030FEE8 /* Assets.xcassets */; };
 		FB247CCF201953A80030FEE8 /* Make_Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB247CCE201953A80030FEE8 /* Make_Clock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9ACED1C9201E76BA00EB260E /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		FB247CB920194C9A0030FEE8 /* Alarm_Clock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alarm_Clock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB247CBC20194C9A0030FEE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB247CC320194C9A0030FEE8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -25,17 +27,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ACED1CA201E76BA00EB260E /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9ACED1C8201E76B900EB260E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9ACED1C9201E76BA00EB260E /* CoreText.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FB247CB020194C9A0030FEE8 = {
 			isa = PBXGroup;
 			children = (
 				FB247CBB20194C9A0030FEE8 /* Alarm_Clock */,
 				FB247CBA20194C9A0030FEE8 /* Products */,
+				9ACED1C8201E76B900EB260E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

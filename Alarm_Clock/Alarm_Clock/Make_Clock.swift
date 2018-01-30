@@ -7,27 +7,27 @@
 //
 
 import UIKit
+import CoreText
 
 class Make_Clock : UIView {
     
-    var seconds = 60 //This variable will hold a starting value of seconds. It could be any amount above 0.
+    var seconds = 60
     var timer = Timer()
-    var isTimerRunning = false //This will be used to make sure only one timer is created at a time.
+    var alarmDay = 2
+    var alarmPMorAM = 1 //0 = AM 1 = pm
+    var alarmHour = 7
+    var alarmMinute = 33
+    var myText = ""
+    let rt = CGRect(x: 100, y: 100, width: 100, height: 100)
+
     
-    private let clockLabel: UILabel = {
-        let clockLabel = UILabel(frame: .zero)
-        
-        clockLabel.textColor = UIColor.green
-        clockLabel.adjustsFontSizeToFitWidth = true
-        clockLabel.textAlignment = NSTextAlignment.center
-        return clockLabel
-    }()
     
     override init(frame: CGRect){
         super.init(frame: frame)
-        addSubview(clockLabel)
+        //addSubview(clockLabel)
         runTimer()
     }
+    
     
     var drawingBounds: CGRect {
         if (bounds.width <= 0.0 || bounds.height <= 0.0)
@@ -53,14 +53,19 @@ class Make_Clock : UIView {
             return
         }
         context.clear(bounds)
-        context.setFillColor((backgroundColor ?? UIColor.white).cgColor)
-        context.fill(bounds)
+        //context.setFillColor((backgroundColor ?? UIColor.white).cgColor)
+        
         context.setFillColor(UIColor.darkGray.cgColor)
-        clockLabel.frame = drawingBounds
+        //
+        context.fill(bounds)
+        
+        addClock()
+        
   
         
         
     }
+    
     
     func getDayofWeek(weekDay: Int) -> String{
         
@@ -85,11 +90,12 @@ class Make_Clock : UIView {
         
     }
     
-    @objc func updateClock() {
+    @objc func checkClock()
+    {
         let date = Date()
         let calendar = Calendar.current
         var hour = calendar.component(.hour, from: date)
-        var timeOfDay: String = ""
+        var timeOfDay: Int = -1
         if(hour >= 12)
         {
             hour = hour - 12
@@ -97,27 +103,73 @@ class Make_Clock : UIView {
             {
                 hour = 12
             }
-            timeOfDay = "PM"
+            timeOfDay = 1
         }
         else{
+            timeOfDay = 0
+        }
+        let minutes = calendar.component(.minute, from: date)
+        let day = calendar.component(.weekday, from: date)
+        
+        if((minutes == alarmMinute && hour == alarmHour) && (timeOfDay == alarmPMorAM && day == alarmDay))
+        {
+            print("equal")
+        }
+        
+        
+    }
+    
+    
+    @objc func addClock() {
+        var addZero: String = ""
+        var addZeroHour: String = ""
+        var timeOfDay: String = ""
+        var weekday: String = getDayofWeek(weekDay: alarmDay)
+        if(alarmPMorAM == 0)
+        {
             timeOfDay = "AM"
         }
-        var minutes = calendar.component(.minute, from: date)
-        var seconds = calendar.component(.second, from: date)
-        var addZero: String = ""
-        if(minutes < 10)
+        else{
+            timeOfDay = "PM"
+        }
+        if(alarmMinute < 10)
         {
             addZero = "0"
         }
+        if(alarmHour < 10)
+        {
+            addZeroHour = "0"
+        }
+
         
-        let day = calendar.component(.weekday, from: date)
-        let weekday = getDayofWeek(weekDay: day)
-        clockLabel.text = "\(weekday) -> \(hour):\(addZero)\(minutes):\(seconds)\(timeOfDay)"
+
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        
+        let attributes = [NSAttributedStringKey.paragraphStyle  :  paragraphStyle,
+                          NSAttributedStringKey.font            :   UIFont.systemFont(ofSize: 15.0),
+                          NSAttributedStringKey.foregroundColor : UIColor.blue,
+                          ]
+        
+        myText = "\(weekday) -> \(addZeroHour)\(alarmHour):\(addZero)\(alarmMinute):\(timeOfDay)"
+        let attrString = NSAttributedString(string: myText,
+                                            attributes: attributes)
+        
+        
+            
+        attrString.draw(in: rt)
+        setNeedsDisplay(rt)
+  
     }
     
+    
+    
     func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(Make_Clock.updateClock)), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(Make_Clock.checkClock)), userInfo: nil, repeats: true)
     }
+    
+    
 
     
     
