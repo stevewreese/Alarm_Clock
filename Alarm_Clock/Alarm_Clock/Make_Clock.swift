@@ -11,21 +11,26 @@ import CoreText
 
 class Make_Clock : UIView {
     
-    var seconds = 60
+    var seconds = 0
     var timer = Timer()
-    var alarmDay = 2
+    var Week_Day = ""
     var alarmPMorAM = 1 //0 = AM 1 = pm
-    var alarmHour = 7
-    var alarmMinute = 33
-    var myText = ""
-    let rt = CGRect(x: 100, y: 100, width: 100, height: 100)
+    var alarmHour = 0
+    var alarmMinute = 0
+    var alarmSec = 0
+    var duration = 0
+    
 
     
     
-    override init(frame: CGRect){
-        super.init(frame: frame)
+    init(Seconds: Int, Day: String, Dur: Int){
+        
+        super.init(frame: UIScreen.main.bounds)
+        seconds = Seconds
+        Week_Day = Day
+        duration = Dur
         //addSubview(clockLabel)
-        runTimer()
+        //runTimer()
     }
     
     
@@ -53,9 +58,9 @@ class Make_Clock : UIView {
             return
         }
         context.clear(bounds)
-        //context.setFillColor((backgroundColor ?? UIColor.white).cgColor)
+        context.setFillColor((backgroundColor ?? UIColor.white).cgColor)
         
-        context.setFillColor(UIColor.darkGray.cgColor)
+        //context.setFillColor(UIColor.darkGray.cgColor)
         //
         context.fill(bounds)
         
@@ -90,7 +95,7 @@ class Make_Clock : UIView {
         
     }
     
-    @objc func checkClock()
+    /*@objc func checkClock()
     {
         let date = Date()
         let calendar = Calendar.current
@@ -118,56 +123,99 @@ class Make_Clock : UIView {
         
         
     }
-    
+    */
     
     @objc func addClock() {
-        var addZero: String = ""
+        
+        alarmHour = seconds/3600
+        alarmMinute = seconds%3600/60
+        alarmSec = seconds%60
+        var addZeroMin: String = ""
         var addZeroHour: String = ""
+        var addZeroSec: String = ""
         var timeOfDay: String = ""
-        var weekday: String = getDayofWeek(weekDay: alarmDay)
-        if(alarmPMorAM == 0)
+        if(alarmHour >= 12)
         {
-            timeOfDay = "AM"
+            timeOfDay = "PM"
+            alarmHour = alarmHour - 11
         }
         else{
-            timeOfDay = "PM"
+            timeOfDay = "AM"
+            if(alarmHour == 0)
+            {
+               alarmHour = 12
+            }
         }
         if(alarmMinute < 10)
         {
-            addZero = "0"
+            addZeroMin = "0"
         }
         if(alarmHour < 10)
         {
             addZeroHour = "0"
         }
+        if(alarmSec < 10)
+        {
+            addZeroSec = "0"
+        }
 
+        let rtDay = CGRect(x: -50, y: 200, width: 500, height: 200)
+        let paragraphStyleDay = NSMutableParagraphStyle()
+        paragraphStyleDay.alignment = .center
         
+        let attributesDay = [NSAttributedStringKey.paragraphStyle  :  paragraphStyleDay,
+                          NSAttributedStringKey.font            :   UIFont.systemFont(ofSize: 35.0),
+                          NSAttributedStringKey.foregroundColor : UIColor.blue,
+        ]
+        
+        var myTextDay = "\(Week_Day)"
+        let attrStringDay = NSAttributedString(string: myTextDay,
+                                            attributes: attributesDay)
+        
+        
+        attrStringDay.draw(in: rtDay)
 
-        
+        let rt = CGRect(x: -50, y: 250, width: 500, height: 200)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         
         let attributes = [NSAttributedStringKey.paragraphStyle  :  paragraphStyle,
-                          NSAttributedStringKey.font            :   UIFont.systemFont(ofSize: 15.0),
+                          NSAttributedStringKey.font            :   UIFont.systemFont(ofSize: 35.0),
                           NSAttributedStringKey.foregroundColor : UIColor.blue,
+                          NSAttributedStringKey.backgroundColor : UIColor.white
                           ]
         
-        myText = "\(weekday) -> \(addZeroHour)\(alarmHour):\(addZero)\(alarmMinute):\(timeOfDay)"
+        var myText = "\(addZeroHour)\(alarmHour):\(addZeroMin)\(alarmMinute):\(addZeroSec)\(alarmSec) \(timeOfDay)"
         let attrString = NSAttributedString(string: myText,
                                             attributes: attributes)
         
         
-            
         attrString.draw(in: rt)
-        setNeedsDisplay(rt)
+        
+        let rtDuration = CGRect(x: -50, y: 300, width: 500, height: 200)
+        let paragraphStyleDuration = NSMutableParagraphStyle()
+        paragraphStyleDuration.alignment = .center
+        
+        let attributesDuration = [NSAttributedStringKey.paragraphStyle  :  paragraphStyleDuration,
+                          NSAttributedStringKey.font            :   UIFont.systemFont(ofSize: 35.0),
+                          NSAttributedStringKey.foregroundColor : UIColor.blue,
+        ]
+        
+        var myTextDuration = "Duration \(duration)"
+        let attrStringDuration = NSAttributedString(string: myTextDuration,
+                                            attributes: attributesDuration)
+        
+        
+        attrStringDuration.draw(in: rtDuration)
+        
   
     }
     
     
     
-    func runTimer() {
+    /*func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(Make_Clock.checkClock)), userInfo: nil, repeats: true)
-    }
+    }*/
     
     
 

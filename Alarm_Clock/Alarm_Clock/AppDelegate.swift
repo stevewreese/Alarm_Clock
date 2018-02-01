@@ -11,16 +11,28 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var mainWindow = UIWindow()
+    var mainWindow: UIWindow = UIWindow()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        mainWindow.backgroundColor = UIColor.white
+       /* mainWindow.rootViewController = {
+            let rootViewController = UIViewController()
+            rootViewController.extendedLayoutIncludesOpaqueBars = true
+            
+            let rootView = Make_Clock(frame: .zero)
+            rootView.backgroundColor = UIColor.cyan
+            
+            mainWindow.rootViewController?.view = rootView
+            
+            return rootViewController
+        }()*/
         
         mainWindow.rootViewController = UIViewController()
         
-        let rootView = Make_Clock()
-        rootView.backgroundColor = UIColor.darkGray
+        let rootView = MainView()
+        rootView.backgroundColor = UIColor.cyan
         
         mainWindow.rootViewController?.view = rootView
         mainWindow.makeKeyAndVisible()
