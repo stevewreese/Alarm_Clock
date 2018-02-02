@@ -19,18 +19,23 @@ class Make_Clock : UIView {
     var alarmMinute = 0
     var alarmSec = 0
     var duration = 0
-    
+    var TimeZone = ""
 
     
     
-    init(Seconds: Int, Day: String, Dur: Int){
+    override init(frame: CGRect){
         
-        super.init(frame: UIScreen.main.bounds)
-        seconds = Seconds
-        Week_Day = Day
-        duration = Dur
-        //addSubview(clockLabel)
-        //runTimer()
+        super.init(frame: frame)
+        
+    }
+    
+    func initValues(sec: Int, day: String, dur: Int, zone: String)
+    {
+        self.seconds = sec
+        self.Week_Day = day
+        self.duration = dur
+        self.TimeZone = zone
+        
     }
     
     
@@ -207,6 +212,22 @@ class Make_Clock : UIView {
         
         
         attrStringDuration.draw(in: rtDuration)
+        
+        let rtZone = CGRect(x: -50, y: 350, width: 500, height: 200)
+        let paragraphStyleZone = NSMutableParagraphStyle()
+        paragraphStyleZone.alignment = .center
+        
+        let attributesZone = [NSAttributedStringKey.paragraphStyle  :  paragraphStyleZone,
+                                  NSAttributedStringKey.font            :   UIFont.systemFont(ofSize: 35.0),
+                                  NSAttributedStringKey.foregroundColor : UIColor.blue,
+                                  ]
+        
+        var myTextZone = "\(TimeZone) Time"
+        let attrStringZone = NSAttributedString(string: myTextZone,
+                                                    attributes: attributesZone)
+        
+        
+        attrStringZone.draw(in: rtZone)
         
   
     }
