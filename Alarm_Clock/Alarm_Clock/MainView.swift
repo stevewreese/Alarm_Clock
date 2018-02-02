@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainView : UIView {
+class MainView : UIView, TimeDelegate {
     
     enum Alarm_Days {
         case Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
@@ -20,10 +20,10 @@ class MainView : UIView {
     
     public var theDay = Alarm_Days.Friday
     public var theTimeZone = Alarm_Time_Zone.Mountain
-    public var Alarm_Time: Int = 0/* - An alarm time represented as an NSTimeInterval representing seconds since midnight within a single day. Assume all days have exactly 86400 seconds.*/
+    public var Alarm_Time: Int = 86399/* - An alarm time represented as an NSTimeInterval representing seconds since midnight within a single day. Assume all days have exactly 86400 seconds.*/
     public var Alarm_Duration = 90 /*A value expressed as an NSTimeInterval which represents the number of seconds for which an alarm will sound. Supported values must be between 1 and 120 seconds.*/
-
     
+    public var alarmControl:  Alarm_Time_Control = Alarm_Time_Control(frame: CGRect(x: 110, y: 220, width: 200, height: 200))
     
     let clock: Make_Clock = {
         let clock = Make_Clock()
@@ -37,8 +37,21 @@ class MainView : UIView {
         super.init(frame: frame)
         clock.initValues(sec: Alarm_Time, day: "\(theDay)", dur: Alarm_Duration, zone: "\(theTimeZone)")
         addSubview(clock)
-        let alarmControl = Alarm_Time_Control(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        
+        alarmControl.initValue(seconds: Alarm_Time)
+        alarmControl.delegate = self
         addSubview(alarmControl)
+        
+    }
+    
+    
+    
+    func sendSeconds(seconds time: Int)
+    {
+        print("it worked \(time)")
+        Alarm_Time = time
+        clock.setTime(time: time)
+        clock.addClock()
         
     }
  

@@ -130,6 +130,11 @@ class Make_Clock : UIView {
     }
     */
     
+    func setTime(time: Int)
+    {
+        seconds = time
+    }
+    
     @objc func addClock() {
         
         alarmHour = seconds/3600
@@ -139,10 +144,14 @@ class Make_Clock : UIView {
         var addZeroHour: String = ""
         var addZeroSec: String = ""
         var timeOfDay: String = ""
-        if(alarmHour >= 12)
+        if(alarmHour > 12)
         {
             timeOfDay = "PM"
-            alarmHour = alarmHour - 11
+            alarmHour = alarmHour - 12
+        }
+        else if(alarmHour == 12)
+        {
+            timeOfDay = "PM"
         }
         else{
             timeOfDay = "AM"
@@ -164,7 +173,7 @@ class Make_Clock : UIView {
             addZeroSec = "0"
         }
 
-        let rtDay = CGRect(x: -50, y: 200, width: 500, height: 200)
+        let rtDay = CGRect(x: -50, y: 150, width: 500, height: 200)
         let paragraphStyleDay = NSMutableParagraphStyle()
         paragraphStyleDay.alignment = .center
         
@@ -179,6 +188,7 @@ class Make_Clock : UIView {
         
         
         attrStringDay.draw(in: rtDay)
+        setNeedsDisplay(rtDay)
 
         let rt = CGRect(x: -50, y: 250, width: 500, height: 200)
         let paragraphStyle = NSMutableParagraphStyle()
@@ -187,7 +197,6 @@ class Make_Clock : UIView {
         let attributes = [NSAttributedStringKey.paragraphStyle  :  paragraphStyle,
                           NSAttributedStringKey.font            :   UIFont.systemFont(ofSize: 35.0),
                           NSAttributedStringKey.foregroundColor : UIColor.blue,
-                          NSAttributedStringKey.backgroundColor : UIColor.white
                           ]
         
         var myText = "\(addZeroHour)\(alarmHour):\(addZeroMin)\(alarmMinute):\(addZeroSec)\(alarmSec) \(timeOfDay)"
@@ -196,8 +205,9 @@ class Make_Clock : UIView {
         
         
         attrString.draw(in: rt)
+        setNeedsDisplay(rt)
         
-        let rtDuration = CGRect(x: -50, y: 300, width: 500, height: 200)
+        let rtDuration = CGRect(x: -50, y: 350, width: 500, height: 200)
         let paragraphStyleDuration = NSMutableParagraphStyle()
         paragraphStyleDuration.alignment = .center
         
@@ -212,8 +222,9 @@ class Make_Clock : UIView {
         
         
         attrStringDuration.draw(in: rtDuration)
+        setNeedsDisplay(rtDuration)
         
-        let rtZone = CGRect(x: -50, y: 350, width: 500, height: 200)
+        let rtZone = CGRect(x: -50, y: 400, width: 500, height: 200)
         let paragraphStyleZone = NSMutableParagraphStyle()
         paragraphStyleZone.alignment = .center
         
@@ -228,7 +239,7 @@ class Make_Clock : UIView {
         
         
         attrStringZone.draw(in: rtZone)
-        
+        setNeedsDisplay(rtZone)
   
     }
     
